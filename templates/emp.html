@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Item Request Form</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='emp.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <!-- Start Page -->
+        <div id="start-page" class="fullscreen start-screen">
+            <h1>Spare Part Request System</h1>
+            <br>
+            <div class="input-group">
+                <i class="fa fa-user icon"></i>
+                <input type="text" id="emp_id" placeholder="Card No." required />
+            </div>
+            <div class="start-button-container">
+                <button onclick="handleStart()">Start</button>
+            </div>
+        </div>
+        
+        <!-- Main Page - Form and Table -->
+        <div id="main-page" class="fullscreen main-screen" style="display: none;">
+            <div class="user-info">
+                <i class="fa fa-user"></i>
+                <span><strong><span id="empIdDisplay"></span></strong></span>
+            </div> 
+            
+            <div class="content-container">
+                <!-- Form Container (Left side) -->
+                <div class="form-container">
+                    <!-- Form Fields -->
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label for="barcode">Scan:</label>
+                            <button class="item-list-btn" onclick="openItemList()">List</button>
+                            <div class="input-group">
+                                <input type="text" id="barcode" placeholder="Scan or enter barcode">
+                                <span class="icon">📦 </span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="quantity">Quantity:</label>
+                            <input type="text" id="quantity" placeholder="Enter quantity">
+
+                            <label for="dept">Request Section:</label>
+                            <select id="dept">
+                                <option value="">Select</option>
+                                <option value="AD">AD</option>
+                                <option value="BP">BP</option>
+                                <option value="BL">BL</option>
+                                <option value="BT">BT</option>
+                                <option value="DP">DP</option>
+                                <option value="EA">EA</option>
+                                <option value="EL">EL</option>
+                                <option value="EN">EN</option>
+                                <option value="HT">HT</option>
+                                <option value="IF">IF</option>
+                                <option value="IP">IP</option>
+                                <option value="MD">MD</option>
+                                <option value="OF">OF</option>
+                                <option value="PC">PC</option>
+                                <option value="PD">PD</option>
+                                <option value="PK">PK</option>
+                                <option value="QC">QC</option>
+                                <option value="RL">RL</option>
+                                <option value="SH">SH</option>
+                                <option value="SP">SP</option>
+                                <option value="ST">ST</option>
+                                <option value="WD">WD</option>
+                            </select>
+                        </div>
+
+                        <button class="add-item-btn" onclick="addToList()">Add Item</button>
+                        <button class="reset-item-btn" onclick="resetForm()">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Table Container (Right side) -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Request Section</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="itemsInRequest">
+                            <!-- Dynamically Added Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Remark Section -->
+            <div class="remark-container">
+                <label for="remark">Remark:</label>
+                <textarea id="remark" rows="3" placeholder="Additional Notes (or -)"></textarea>
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <div class="button-group">
+                <button class="cancel-button" onclick="goToStartPage()">Cancel</button>
+                <button class="submit-button" onclick="submitAllItems()">Submit</button>
+            </div>
+
+            <div id="confirmation-message"></div>
+        </div>
+        
+        <div class="notification-bar" id="notificationBar" style="display: none;">
+            <span class="notification-text">
+                <strong>Success!</strong> Your request has been submitted.
+            </span>
+            <span class="reference-number">
+                Reference Number: <span id="referenceNumber"></span>
+            </span>
+            <span class="close-btn" onclick="closeNotification()">&times;</span>
+        </div>        
+
+        <!-- Item List Modal -->
+        <div id="itemListModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeItemListModal()">&times;</span>
+                <h2>Items List</h2>
+                <br>
+                <input type="text" id="itemListSearch" placeholder="Search item here..." onkeyup="filterItems()">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Catalog Number</th>
+                            <th>Item Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemListTable">
+                        <!-- Items will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            function openItemList() {
+                openItemListModal();
+            }
+
+            function closeItemListModal() {
+                document.getElementById('itemListModal').style.display = 'none';
+            }
+
+            function selectItem(barcode) {
+                document.getElementById('barcode').value = barcode;
+                scanItem();
+                closeItemListModal();
+            }
+
+            document.getElementById('emp_id').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    fetchEmployeeDetails();
+                }
+            });
+
+            document.getElementById('barcode').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') { 
+                    event.preventDefault();
+                    scanItem(); 
+                    document.getElementById('quantity').focus(); 
+                }
+            });
+
+            document.getElementById('quantity').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    document.getElementById('dept').focus(); 
+                }
+            });
+
+            document.getElementById('barcode').addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+        </script>
+
+        <script src="{{ url_for('static', filename='emp_script.js') }}"></script>
+    </body>
+</html>

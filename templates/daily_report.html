@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='daily.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white" id="sidebar-wrapper" style="height: 100vh;">
+            <div class="sidebar-heading text-center py-4">
+                <h4>Admin Dashboard</h4>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="/admin" class="list-group-item list-group-item-action bg-dark text-white">Home</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Daily Report</a>
+                <a href="/custom_report" class="list-group-item list-group-item-action bg-dark text-white">Custom Report</a>
+                <a href="/add_item" class="list-group-item list-group-item-action bg-dark text-white" id="custom-report-link">Add New Item</a>
+                <br>
+                <br>
+                <br>
+                <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action bg-dark text-white">Logout</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="flex-grow: 1;">
+            <nav class="navbar navbar-expand-lg">
+                <h3 class="ml-3">Daily Report - <span id="currentDate"></span></h3>
+                <div class="user-info">
+                    <i class="fa fa-user"></i>
+                    <span><strong><span>ER9999</span></strong></span>
+                </div> 
+            </nav>
+
+            <div class="container-{breakpoint}" id="content-area">
+                <br>
+                <div class="button-container">
+                    <!-- Apply the custom class to the container -->
+                    <button onclick="printDailyTransactions()" class="btn btn-primary">
+                        <i class="fas fa-print"></i>
+                    </button>
+                    <button onclick="exportToExcel()" class="btn btn-success">
+                        <i class="fas fa-file-excel"></i>
+                    </button>
+                </div>
+                <br>
+                <table class="table table-striped" id="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Reference No.</th>
+                            <th>Catalog Number</th>
+                            <th class="center">Item Name</th>
+                            <th class="center">Quantity</th>
+                            <th class="center">Request Section</th>
+                            <th class="center">Card No.</th>
+                            <th class="center">User Section</th>
+                            <th class="center">Status</th>
+                            <th class="center">Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Transactions will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        const today = new Date();
+  
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        const formattedDate = today.toLocaleDateString('en-GB', options);
+
+        document.getElementById('currentDate').textContent = formattedDate;
+    </script>
+
+    <script src="{{ url_for('static', filename='daily_script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Custom Report</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="d-flex" id="wrapper">
+            <div class="bg-dark text-white" id="sidebar-wrapper" style="height: 100vh;">
+                <div class="sidebar-heading text-center py-4">
+                    <h4>Admin Dashboard</h4>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="/admin" class="list-group-item list-group-item-action bg-dark text-white" id="home-link">Home</a>
+                    <a href="/daily_report" class="list-group-item list-group-item-action bg-dark text-white" id="daily-report-link">Daily Report</a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white" id="custom-report-link">Custom Report</a>
+                    <a href="/add_item" class="list-group-item list-group-item-action bg-dark text-white" id="custom-report-link">Add New Item</a>
+                    <br>
+                    <br>
+                    <br>
+                    <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action bg-dark text-white">Logout</a>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper" style="flex-grow: 1;">
+                <nav class="navbar navbar-expand-lg">
+                    <h3 class="ml-3">Custom Report</h3>
+                    <div class="user-info">
+                        <i class="fa fa-user"></i>
+                        <span><strong><span>ER9999</span></strong></span>
+                    </div> 
+                </nav>           
+
+                <div class="container mt-5" id="content-area">
+                    <h3>Transaction Requests</h3>
+                    <br>
+                    <div class="d-flex mb-3">
+                        <select id="statusFilter" class="form-control" style="width: 150px;">
+                            <option value="all">All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Approve">Approve</option>
+                            <option value="On Hold">On Hold</option>
+                        </select>
+                        <input type="date" id="startDate" name=start_date class="form-control"/>
+                        <input type="date" id="endDate" name=end_date class="form-control"/>
+                        <input type="text" id="searchBox"  class="form-control" placeholder="Search...">
+                        <button onclick="fetchFilteredTransactions()" class="btn btn-info ml-2">Filter</button>
+                        <button onclick="clearFilters()" class="btn btn-secondary ml-2">Reset</button>
+                        <button onclick="printCustomTransactions()" class="btn btn-primary ml-2">
+                            <i class="fas fa-print"></i>
+                        </button>
+                        <button onclick="exportToExcel()" class="btn btn-success ml-2">
+                            <i class="fas fa-file-excel"></i>
+                        </button>
+                    </div>
+                    <br>
+                    <table class="table table-striped" id="transaction-table">
+                        <thead>
+                            <tr>
+                                <th class="center">Date</th>
+                                <th class="center">Reference No.</th>
+                                <th class="center">Card No.</th>
+                                <th class="center">User Section</th>
+                                <th class="center">Remark</th>
+                                <th class="center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Transactions will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination-container">
+                          <li class="page-item" id="prev-button">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                          </li>
+                          <!-- Dynamic page numbers will be inserted here -->
+                          <li class="page-item" id="next-button">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                            </a>
+                          </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('#menu-toggle').click(function() {
+                $('#wrapper').toggleClass('toggled');
+            });
+
+            function populateTable(data, currentPage) {
+                const transactionTableBody = document.querySelector('#transaction-table tbody');
+                const paginationContainer = document.querySelector('#pagination-container');
+                
+                if (Array.isArray(data.transactions)) {
+                transactionTableBody.innerHTML = '';
+
+                if (data.transactions.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.innerHTML = '<td colspan="7" class="text-center">No transactions found.</td>';
+                    transactionTableBody.appendChild(noDataRow);
+                } else {
+                    // Populate the table with sorted transactions
+                    data.transactions.forEach(transaction => {
+                        const statusClass = {
+                            'Pending': 'highlight-pending',
+                            'Approve': 'highlight-approve',
+                            'On Hold': 'highlight-on-hold',
+                            'Cancel': 'highlight-cancel'
+                        }[transaction.status] || '';
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="center">${transaction.transaction_date || '-'}</td>
+                            <td class="center">${transaction.transaction_id}</td>
+                            <td class="center">${transaction.emp_id}</td>
+                            <td class="center">${transaction.emp_dept}</td>
+                            <td class="center">${transaction.remark}</td>
+                            <td class="center"><span class="${statusClass}">${transaction.status}</span></td>
+                        `;
+                        transactionTableBody.appendChild(row);
+                    });
+                    }
+                } else {
+                console.error("Invalid data format:", data);
+                }
+
+                updatePagination(data.pagination, currentPage);
+            }
+
+            function clearFilters() {
+                $('#statusFilter').val('all');
+                $('#startDate').val('');
+                $('#endDate').val('');
+                $('#searchBox').val('');
+
+                fetchFilteredTransactions();
+            }
+        </script>
+
+        <script src="{{ url_for('static', filename='custom_script.js') }}"></script>
+    </body>
+</html>

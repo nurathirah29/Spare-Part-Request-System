@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Item</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Add New Item</h2>
+    <form id="add-item-form" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+          <label for="catalogNumber">Catalog Number</label>
+          <input type="text" class="form-control" id="catalogNumber" name="catalogNumber" placeholder="eg. ES1S-CS-CG001-005" required>
+      </div>
+      <div class="form-group">
+          <label for="itemName">Item Name</label>
+          <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Enter item name" required>
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" name="category" placeholder="(Optional)">
+      </div>
+      <div class="form-group">
+          <label for="unitUom">Unit of Measure (UOM)</label>
+          <select class="form-control" id="unitUom" name="unitUom" required>
+              <option value="" disabled selected>Select UOM</option>
+              <option value="Bag">Bag</option>
+              <option value="Box">Box</option>
+              <option value="Btl">Btl</option>
+              <option value="Doz">Doz</option>
+              <option value="Kg">Kg</option>
+              <option value="Nos">Nos</option>
+              <option value="Pail">Pail</option>
+              <option value="Pair">Pair</option>
+              <option value="Pcs">Pcs</option>
+              <option value="Pkt">Pkt</option>
+              <option value="Roll">Roll</option>
+              <option value="Set">Set</option>
+              <option value="Tin">Tin</option>
+              <option value="Unit">Unit</option>
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="itemImage">Upload Image (Optional)</label>
+          <input type="file" class="form-control-file" id="itemImage" name="itemImage" accept="image/*">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Item</button>
+    </form>  
+  </div>
+  <script>
+    $(document).ready(function() {
+      $('#add-item-form').submit(function(event) {
+        event.preventDefault();  // Prevent default form submission
+  
+        var formData = new FormData(this);  // Create FormData object from the form
+  
+        $.ajax({
+          url: '/add_item',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            // Handle the response
+            console.log('Item added successfully', response);
+            alert('Item added successfully');
+          },
+          error: function(response) {
+            // Handle the error
+            console.error("Error adding item", response);
+            alert('Error adding item');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

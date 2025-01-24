@@ -1,0 +1,234 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+    height: 100%; 
+    background-color: #f4f5f7;
+    font-family: 'Arial', sans-serif;
+}
+
+#wrapper {
+    display: flex;
+    height: 100vh; 
+    margin: 0;
+    overflow: hidden;
+}
+
+#sidebar-wrapper {
+    width: 220px;
+    height: 100vh;
+    background-color: #343a40;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    font-size: 18px; 
+}
+
+#sidebar-wrapper .list-group-item {
+    font-size: 16px; 
+    padding: 10px 15px;
+}
+
+#page-content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden; 
+}
+
+.container {
+    flex: 1; 
+    overflow: auto; 
+}
+
+.user-info {
+    position: absolute;
+    top: 20px; 
+    right: 20px;  
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.transaction-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    padding: 12px;
+    vertical-align: middle !important;
+}
+
+th.center, td.center {
+    text-align: center;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.transaction-table thead, 
+.transaction-table tbody, 
+.transaction-table tfoot {
+    display: table-row-group;
+    width: 100%;
+}
+
+.transaction-table tbody {
+    height: 300px;
+    overflow-y: auto;
+    display: block;
+}
+
+#transaction-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#transaction-table th, 
+#transaction-table td {
+    width: 150px;
+}
+
+#transaction-table th:nth-child(1),
+#transaction-table td:nth-child(1) {
+    width: 150px;  
+}
+
+#transaction-table th:nth-child(2), /* Transaction ID */
+#transaction-table td:nth-child(2) {
+    width: 200px;  
+}
+
+#transaction-table th:nth-child(5), /* Remarks */
+#transaction-table td:nth-child(5) {
+    width: 130px; 
+}
+
+#transaction-table td span {
+    display: inline-block;
+    width: 70%;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+#transaction-table .btn-info {
+    padding: 6px 12px;
+    margin: 0;
+    text-align: center;
+}
+
+.btn {
+    height: calc(1.5em + .75rem + 2px);
+    padding: 0.375rem 0.75rem;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.btn-info, .btn-secondary {
+    font-size: 16px;
+}
+
+.form-control {
+    border-radius: 8px;
+    box-shadow: none;
+    margin-bottom: 10px;
+    height: calc(1.5em + .75rem + 2px);
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #007bff;
+}
+
+#statusFilter,
+#searchBox,
+#startDate,
+#endDate {
+    margin-right: 10px;
+}
+
+.modal-content {
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    border-bottom: none;
+    padding-bottom: 15px;
+}
+
+.modal-body {
+    padding-top: 15px;
+}
+
+.modal-title {
+    font-size: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.highlight-pending {
+    background-color: #FFB200;
+    color: black;
+    font-weight: bold;
+}
+
+.highlight-approve {
+    background-color: #118B50;
+    color: black;
+    font-weight: bold;
+}
+
+.highlight-on-hold {
+    background-color: #B3C8CF;
+    color: black;
+    font-weight: bold;
+}
+
+.highlight-cancel {
+    background-color: #C62300;
+    color: black;
+    font-weight: bold;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+.pagination-container {
+    position: relative; 
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    margin: 20px auto;
+}
+
+#item-table th:nth-child(1) { width: 10px; }
+#item-table th:nth-child(2) { width: 200px; }
+#item-table th:nth-child(3) { width: 300px; }
+#item-table th:nth-child(4) { width: 50px; }
+#item-table th:nth-child(5) { width: 130px; }

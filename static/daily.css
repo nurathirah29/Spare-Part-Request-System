@@ -1,0 +1,130 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+    height: 100%; 
+    background-color: #f4f5f7;
+    font-family: 'Arial', sans-serif;
+}
+
+#wrapper {
+    display: flex;
+    height: 100vh; 
+    margin: 0;
+    overflow: hidden;
+}
+
+#sidebar-wrapper {
+    width: 220px; 
+    height: 100vh;
+    background-color: #343a40; 
+}
+
+#sidebar-wrapper .sidebar-heading {
+    font-size: 18px; 
+}
+
+#sidebar-wrapper .list-group-item {
+    font-size: 16px; 
+    padding: 10px 15px;
+}
+
+#page-content-wrapper {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+    
+}
+
+.container {
+    flex: 1; 
+    width: 100%;
+    max-width: 100%;
+}
+
+.user-info {
+    position: absolute;
+    top: 20px; 
+    right: 20px;  
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+.button-container button {
+    margin-left: 10px; 
+}
+
+#transaction-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#transaction-table th:nth-child(1), /* Index */
+#transaction-table td:nth-child(1) {
+    width: 50px;  
+}
+
+#transaction-table th:nth-child(2), /* Transaction ID */
+#transaction-table td:nth-child(2) {
+    width: 130px;  
+}
+
+#transaction-table th:nth-child(3), /* Catalog Number */
+#transaction-table td:nth-child(3) {
+    width: 180px;  
+}
+
+#transaction-table th:nth-child(4), /* Item Name */
+#transaction-table td:nth-child(4) {
+    width: 250px;  
+}
+
+#transaction-table th:nth-child(5), /* Quantity */
+#transaction-table td:nth-child(5) {
+    width: 100px; 
+}
+
+#transaction-table th:nth-child(6), /* Request Section */
+#transaction-table td:nth-child(6) {
+    width: 150px; 
+}
+
+#transaction-table th:nth-child(7), /* Card No. */
+#transaction-table td:nth-child(7) {
+    width: 100px; 
+}
+
+#transaction-table th:nth-child(8), /* User Section */
+#transaction-table td:nth-child(8) {
+    width: 120px; 
+}
+
+#transaction-table th:nth-child(9), /* Status */
+#transaction-table td:nth-child(9) {
+    width: 100px; 
+}
+
+#transaction-table th:nth-child(10), /* Remark */
+#transaction-table td:nth-child(10) {
+    width: 100px; 
+}
+
+#transaction-table .btn-info {
+    padding: 6px 12px;
+    margin: 0;
+    text-align: center;
+}
+
+th.center, td.center {
+    text-align: center;
+    padding: 8px;
+}
