@@ -17,39 +17,28 @@ CORS(app, methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 app.secret_key = secrets.token_hex(16)
 
-ADMIN_EMP_ID = 'ER9999'
+ADMIN_EMP_ID = 'ABC123'
 
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-EMAIL_ADDRESS = 'esystem@excel-rim.com'
-EMAIL_PASSWORD = 'Ersystem@2024$$'
-SMTP_SERVER = 'mail.excel-rim.com'
-SMTP_PORT = 587
+EMAIL_ADDRESS = 'email@example.com'
+EMAIL_PASSWORD = 'your_password'
+SMTP_SERVER = 'mail.server.com'
+SMTP_PORT = 000
 
 RECIPIENT_REPORT_MAPPING = {
-    'BL': 'luqman@excel-rim.com',
-    'BT': 'sofian@excel-rim.com',
-    'DP': 'khairi@excel-rim.com',
-    'EN': 'ycloh@excel-rim.com',
-    'IF': 'luqman@excel-rim.com',
-    'IP': 'luqman@excel-rim.com',
-    'RL': 'rl@excel-rim.com',
-    'SH': 'difan@excel-rim.com',
-    'SP': 'luqman@excel-rim.com',
-    'ST': 'store-2@excel-rim.com',
-    'WD': 'sofian@excel-rim.com',
-    'WS': 'ws@excel-rim.com'
+    'BL': 'example@example.com',
 }
 
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
-            host='192.168.110.99',
-            user='root',
-            password='ERMsql999$',
-            database='kiosk_db'
+            host='your_host',
+            user='username',
+            password='your_password',
+            database='example_db'
         )
         if connection.is_connected():
             logging.info("Database connection successful")
@@ -962,4 +951,4 @@ def update_email_status(transaction_id):
             connection.close()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=912, debug=True)
+    app.run(host='0.0.0.0', port=000, debug=True)
