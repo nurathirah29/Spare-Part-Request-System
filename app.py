@@ -22,7 +22,7 @@ CORS(app, methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 app.secret_key = secrets.token_hex(16)
 
-ADMIN_EMP_ID = 'ER9999'
+ADMIN_EMP_ID = 'ADMIN'
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'images')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -30,38 +30,23 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 logging.info(f"Upload folder configured at: {UPLOAD_FOLDER}")
 
-EMAIL_ADDRESS = 'esystem@excel-rim.com'
-EMAIL_PASSWORD = 'Ersystem@2024$$'
-SMTP_SERVER = 'mail.excel-rim.com'
+EMAIL_ADDRESS = 'example@example.com'
+EMAIL_PASSWORD = ''
+SMTP_SERVER = 'example-mail.example.com'
 SMTP_PORT = 587
 
 RECIPIENT_REPORT_MAPPING = {
-    'AD': 'ad@excel-rim.com',
-    'BL': 'luqman@excel-rim.com',
-    'BT': 'sofian@excel-rim.com',
-    'DP': 'khairi@excel-rim.com',
-    'EA': 'cpyeoh@excel-rim.com',
-    'EL': 'electrical@excel-rim.com',
-    'EN': 'ycloh@excel-rim.com',
-    'IF': 'luqman@excel-rim.com',
-    'IP': 'luqman@excel-rim.com',
-    'PK': 'qc@excel-rim.com',
-    'QA': 'aida@excel-rim.com',
-    'RL': 'rl1@excel-rim.com',
-    'SH': 'difan@excel-rim.com',
-    'SP': 'luqman@excel-rim.com',
-    'ST': 'azrul@excel-rim.com',
-    'WD': 'sofian@excel-rim.com',
-    'WS': 'ws@excel-rim.com'
+    'CS': 'cs@example.com',
+    'IT': 'it@example.com',
 }
 
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
-            host='192.168.110.99',
+            host='localhost',
             user='root',
-            password='ERMsql999$',
-            database='kiosk_db',
+            password='',
+            database='sprs_db',
             charset='utf8mb4',
             collation='utf8mb4_unicode_ci',
             use_unicode=True
@@ -77,11 +62,10 @@ def get_db_connection():
         return None
 
 MSSQL_CONFIG = {
-    # 'server': '192.168.111.56',
-    'server': 'er056-server',
-    'database': 'IBAS_ERLIVE',
-    'user': 'sa',
-    'password': 'ERMsql99',
+    'server': 'localhost',
+    'database': 'ms_db',
+    'user': 'root',
+    'password': '',
 }
 
 def get_mssql_connection():
@@ -1395,4 +1379,4 @@ if __name__ == '__main__':
         logging.error(f"Failed to initialize upload folder: {e}")
         logging.error("Application may not be able to save uploaded files!")
         
-    app.run(host='0.0.0.0', port=912, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
