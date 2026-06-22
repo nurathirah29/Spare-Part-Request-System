@@ -37,7 +37,7 @@ SMTP_PORT = 587
 
 RECIPIENT_REPORT_MAPPING = {
     'CS': 'cs@example.com',
-    'IT': 'it@example.com',
+    'IT': 'it@example.com'
 }
 
 def get_db_connection():
