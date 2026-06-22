@@ -1,0 +1,26 @@
+"filename", "language", "Python", "HTML", "pip requirements", "JavaScript", "PostCSS", "comment", "blank", "total"
+"\\192.168.110.99\web\spbs\app.py", "Python", 767, 0, 0, 0, 0, 40, 168, 975
+"\\192.168.110.99\web\spbs\appCopy.py", "Python", 767, 0, 0, 0, 0, 40, 168, 975
+"\\192.168.110.99\web\spbs\appEdit.py", "Python", 273, 0, 0, 0, 0, 993, 33, 1299
+"\\192.168.110.99\web\spbs\requirements.txt", "pip requirements", 0, 0, 5, 0, 0, 0, 0, 5
+"\\192.168.110.99\web\spbs\static\add_item.css", "PostCSS", 0, 0, 0, 0, 51, 0, 9, 60
+"\\192.168.110.99\web\spbs\static\admin.css", "PostCSS", 0, 0, 0, 0, 196, 0, 39, 235
+"\\192.168.110.99\web\spbs\static\admin_script.js", "JavaScript", 0, 0, 0, 304, 0, 6, 50, 360
+"\\192.168.110.99\web\spbs\static\custom.css", "PostCSS", 0, 0, 0, 0, 167, 0, 32, 199
+"\\192.168.110.99\web\spbs\static\custom_script - Copy.js", "JavaScript", 0, 0, 0, 340, 0, 8, 49, 397
+"\\192.168.110.99\web\spbs\static\custom_script.js", "JavaScript", 0, 0, 0, 414, 0, 10, 50, 474
+"\\192.168.110.99\web\spbs\static\daily.css", "PostCSS", 0, 0, 0, 0, 108, 0, 22, 130
+"\\192.168.110.99\web\spbs\static\daily_script.js", "JavaScript", 0, 0, 0, 320, 0, 10, 25, 355
+"\\192.168.110.99\web\spbs\static\emp.css", "PostCSS", 0, 0, 0, 0, 476, 0, 73, 549
+"\\192.168.110.99\web\spbs\static\emp_script.js", "JavaScript", 0, 0, 0, 295, 0, 7, 67, 369
+"\\192.168.110.99\web\spbs\static\manage_item.js", "JavaScript", 0, 0, 0, 423, 0, 44, 73, 540
+"\\192.168.110.99\web\spbs\templates\add_item copy.html", "HTML", 0, 89, 0, 0, 0, 0, 1, 90
+"\\192.168.110.99\web\spbs\templates\add_item.html", "HTML", 0, 89, 0, 0, 0, 0, 1, 90
+"\\192.168.110.99\web\spbs\templates\admin.html", "HTML", 0, 256, 0, 0, 0, 13, 28, 297
+"\\192.168.110.99\web\spbs\templates\admin_login.html", "HTML", 0, 84, 0, 0, 0, 0, 14, 98
+"\\192.168.110.99\web\spbs\templates\custom_report.html", "HTML", 0, 143, 0, 0, 0, 5, 12, 160
+"\\192.168.110.99\web\spbs\templates\daily_report.html", "HTML", 0, 79, 0, 0, 0, 4, 8, 91
+"\\192.168.110.99\web\spbs\templates\emp.html", "HTML", 0, 215, 0, 0, 0, 16, 28, 259
+"\\192.168.110.99\web\spbs\templates\empp.html", "HTML", 0, 215, 0, 0, 0, 16, 28, 259
+"\\192.168.110.99\web\spbs\templates\manage_item.html", "HTML", 0, 303, 0, 0, 0, 9, 17, 329
+"Total", "-", 1807, 1473, 5, 2096, 998, 1221, 995, 8595

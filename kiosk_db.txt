@@ -1,0 +1,49 @@
+-- create table DEPARTMENT --
+CREATE TABLE department (
+	dept_id VARCHAR(20) PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- create table EMPLOYEE --
+CREATE TABLE employee (
+	emp_id VARCHAR(20) PRIMARY KEY,
+	emp_name VARCHAR(100) NOT NULL,
+	emp_post VARCHAR (50) NOT NULL,
+	emp_dept VARCHAR(20),
+	emp_comp VARCHAR (20),
+	FOREIGN KEY (emp_dept) REFERENCES department (dept_id)
+);
+
+-- create table ITEM --
+CREATE TABLE item (
+	catalog_number VARCHAR(100) PRIMARY KEY,
+	item_name VARCHAR(100) NOT NULL,
+	category VARCHAR(50),
+	item_image VARCHAR(255),
+	unit_uom VARCHAR(20)
+);
+
+-- create table TRANSACTION --
+CREATE TABLE transactions (
+	transaction_id VARCHAR(30) PRIMARY KEY,
+	emp_id VARCHAR(20),
+	transaction_date DATE,
+	status VARCHAR(20) CHECK (status IN ('Pending', 'Approve', 'On Hold', 'Cancel')),
+	remark TEXT,
+	approval_email_sent TINYINT DEFAULT 0;
+	FOREIGN KEY (emp_id) REFERENCES employee (emp_id)
+);
+
+-- create table TRANSACTION_DETAIL --
+CREATE TABLE transaction_detail (
+	transaction_id VARCHAR(30),
+	catalog_number VARCHAR(100),
+	item_name VARCHAR(100) NOT NULL,
+	quantity INT,
+	dept_id VARCHAR(20),
+	item_status VARCHAR(20) CHECK (status IN ('Pending', 'Approve', 'Cancel')),
+	PRIMARY KEY (transaction_id, catalog_number, dept_id),
+	FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id),
+	FOREIGN KEY (catalog_number) REFERENCES item (catalog_number),
+	FOREIGN KEY (dept_id) REFERENCES department (dept_id)
+);
