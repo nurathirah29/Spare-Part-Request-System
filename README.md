@@ -116,6 +116,6 @@ Example: `260626-AD-001`
 
 ---
 
-## License
+## Author
 
 Nur Athirah
